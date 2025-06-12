@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  config-server:
+    build:
+      context: ./config-service
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./config-repo:/config
+
+  eureka:
+    build:
+      context: ./discovery-service
+    container_name: eureka
+    ports:
+      - "8761:8761"
+
+  user-service:
+    build:
+      context: ./user-service
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - config-server
+      - eureka
+      - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: fintrack
+      POSTGRES_PASSWORD: fintrack123
+      POSTGRES_DB: fintrack_userdb
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      POSTGRES_INITDB_ARGS: '--locale=en_US.UTF-8'
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
