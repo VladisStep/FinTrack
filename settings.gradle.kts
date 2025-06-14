@@ -4,7 +4,7 @@ include(
     "config-service",
     "discovery-service",
 //    "gateway-service",
-//    "auth-service",
+    "auth-service",
     "user-service",
 //    "transaction-service",
 //    "category-service",
