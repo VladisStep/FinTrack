@@ -25,7 +25,7 @@ public class AuthService {
                 .role(Role.USER)
                 .build();
         userRepository.save(user);
-        String token = jwtService.generateToken(user.getUsername());
+        String token = jwtService.generateToken(user);
         return new AuthResponse(token);
     }
 
@@ -35,7 +35,7 @@ public class AuthService {
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
-        String token = jwtService.generateToken(user.getUsername());
+        String token = jwtService.generateToken(user);
         return new AuthResponse(token);
     }
 }
