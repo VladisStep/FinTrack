@@ -7,6 +7,8 @@ import com.fintrack.auth.model.Role;
 import com.fintrack.auth.model.User;
 import com.fintrack.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +33,11 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.username())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->
+                    new UsernameNotFoundException("Not found user with username: " + request.username())
+                );
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new BadCredentialsException("Invalid password");
         }
         String token = jwtService.generateToken(user);
         return new AuthResponse(token);

@@ -2,12 +2,12 @@ package com.fintrack.auth.service;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.AccessDeniedException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -44,6 +44,6 @@ public class AuthCheckAspect  {
             .filter(authority -> !Objects.isNull(authority))
             .filter(requiredRole::equals)
             .findAny()
-            .orElseThrow(() -> new AccessDeniedException("Access denied: missing role " + requiredRole));
+            .orElseThrow(() -> new AccessDeniedException("Missing role " + requiredRole));
     }
 }

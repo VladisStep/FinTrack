@@ -34,8 +34,9 @@ import static com.fintrack.auth.service.JwtService.ROLE_CLAIM_NAME;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final static String TOKEN_PREFIX = "Bearer ";
+    private static final String TOKEN_PREFIX = "Bearer ";
     private static final String ROLE_PREFIX = "ROLE_";
+    private static final String AUTH_HEADER_NAME = "Authorization";
 
     private final JwtService jwtService;
     private final JwtProperties jwtProperties;
@@ -63,7 +64,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String token = Optional.ofNullable(request.getHeader("Authorization"))
+        String token = Optional.ofNullable(request.getHeader(AUTH_HEADER_NAME))
             .filter(authHeader -> authHeader.startsWith(TOKEN_PREFIX))
             .map(authHeader -> authHeader.substring(TOKEN_PREFIX.length()))
             .orElse("");
