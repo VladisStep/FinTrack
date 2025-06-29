@@ -38,6 +38,8 @@ dependencies {
     // config server
     implementation("org.springframework.cloud:spring-cloud-starter-config")
 
+    // OpenAPI
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 
     // tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")

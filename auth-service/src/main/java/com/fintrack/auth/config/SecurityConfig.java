@@ -20,15 +20,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableAspectJAutoProxy
 public class SecurityConfig {
 
+    private static final String[] PUBLIC_ENDPOINTS = {
+        "/login",
+        "/register",
+        "/swagger-ui/**",
+        "/v3/api-docs/**"
+    };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/register", "/login")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
