@@ -15,4 +15,4 @@ COPY wait-for-it.sh wait-for-it.sh
 RUN chmod +x wait-for-it.sh
 
 # Запускаем приложение
-ENTRYPOINT ["./wait-for-it.sh", "config-server:8888", "--", "java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["./wait-for-it.sh", "config-server:8888","--","./wait-for-it.sh","eureka:8761", "--", "java", "-jar", "/app/app.jar"]
