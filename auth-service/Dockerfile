@@ -14,5 +14,11 @@ COPY ${JAR_FILE} app.jar
 COPY wait-for-it.sh wait-for-it.sh
 RUN chmod +x wait-for-it.sh
 
-# Запускаем приложение
-ENTRYPOINT ["./wait-for-it.sh", "config-server:8888", "--", "java", "-jar", "/app/app.jar"]
+## Запускаем приложение
+#ENTRYPOINT ["./wait-for-it.sh", "config-server:8888", "--", "java", "-jar", "/app/app.jar"]
+
+# Пробрасываем порт для отладки
+EXPOSE 5005
+
+# Запускаем приложение с возможностью удалённой отладки
+ENTRYPOINT ["./wait-for-it.sh", "config-server:8888", "--","./wait-for-it.sh","eureka:8761", "--", "java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/app.jar"]

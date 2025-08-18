@@ -13,35 +13,26 @@ repositories {
 }
 
 dependencies {
-    // Spring Boot Starter
     implementation("org.springframework.boot:spring-boot-starter-web")
-
-    // Spring Security
     implementation("org.springframework.boot:spring-boot-starter-security")
-
-    // JWT (JJWT)
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    implementation("org.springframework.security:spring-security-crypto")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
+
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
-
-    // Password hashing
-    implementation("org.springframework.security:spring-security-crypto")
-
-    // JPA + PostgreSQL
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("org.postgresql:postgresql")
 
-    // Lombok
     compileOnly("org.projectlombok:lombok")
+
     annotationProcessor("org.projectlombok:lombok")
 
-    // config server
-    implementation("org.springframework.cloud:spring-cloud-starter-config")
-
-    // OpenAPI
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
-
-    // tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
