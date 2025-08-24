@@ -6,7 +6,7 @@ include(
 //    "gateway-service",
     "auth-service",
     "user-service",
-//    "transaction-service",
+    "transaction-service",
 //    "category-service",
 //    "analytics-service",
 //    "notification-service",

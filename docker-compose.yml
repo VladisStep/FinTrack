@@ -34,11 +34,18 @@ services:
     container_name: auth-service
     ports:
       - "8082:8082"
-      - "5005:5005"  # порт для отладки
     depends_on:
       - config-server
       - eureka
       - postgres
+
+  transaction-service:
+    build: ./transaction-service
+    depends_on:
+      - config-server
+      - postgres
+    ports:
+      - "8083:8080"
 
   postgres:
     image: postgres:15
@@ -47,9 +54,6 @@ services:
       POSTGRES_USER: fintrack
       POSTGRES_PASSWORD: fintrack123
       POSTGRES_DB: fintrack_userdb
-      LANG: en_US.UTF-8
-      LC_ALL: en_US.UTF-8
-      POSTGRES_INITDB_ARGS: '--locale=en_US.UTF-8'
     ports:
       - "5432:5432"
     volumes:
