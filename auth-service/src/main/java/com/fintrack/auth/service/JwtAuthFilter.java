@@ -79,13 +79,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             .build()
             .parseClaimsJws(token)
             .getBody();
-        String username = claims.getSubject();
+        Long userid = Long.parseLong(claims.getSubject());
         String role = claims.get(ROLE_CLAIM_NAME, String.class);
         Collection<? extends GrantedAuthority> authorities = Collections.singletonList(
             new SimpleGrantedAuthority(ROLE_PREFIX + role)
         );
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-            username,
+            userid,
             null,
             authorities
         );
