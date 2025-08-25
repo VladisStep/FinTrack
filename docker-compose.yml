@@ -41,6 +41,8 @@ services:
 
   transaction-service:
     build: ./transaction-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
     depends_on:
       - config-server
       - postgres
